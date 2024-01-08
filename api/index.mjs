@@ -33,7 +33,7 @@ async function onRequest(req, res) {
                        .replace('/','//')
                        .replace('///','//');
     console.log(apiURLString);
-    return webscrapeFetch(apiURLString);
+    return webscrapeFetch(apiURLString,res);
   }
 
 
