@@ -9,7 +9,7 @@ globalThis.cse_tok = JSONExtract(script_raw, "cse_token");
 }
 console.log(cse_tok);
 
-let cse_url = `https://cse.google.com/cse/element/v1?rsz=4&num=4&hl=en&source=gcsc&gss=.com&cx=${cx}&q=${query}&safe=off&cse_tok=${cse_tok}&lr=&cr=&gl=&filter=1&sort=&as_oq=&as_sitesearch=&exp=csqr%2Ccc&oq=${query}&cseclient=hosted-page-client&callback=google.search.cse.api`;
+let cse_url = `https://cse.google.com/cse/element/v1?rsz=10&num=10&hl=en&source=gcsc&gss=.com&cx=${cx}&q=${query}&safe=off&cse_tok=${cse_tok}&lr=&cr=&gl=&filter=1&sort=&as_oq=&as_sitesearch=&exp=csqr%2Ccc&oq=${query}&cseclient=hosted-page-client&callback=google.search.cse.api`;
 
 return fetchText(cse_url);
 }
