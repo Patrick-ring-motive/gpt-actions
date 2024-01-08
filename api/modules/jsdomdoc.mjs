@@ -34,6 +34,7 @@ globalThis.webscrapeFetch=async function(url,res){
   
     let text2=text.replaceAll('  ',' ');
     while(text2!=text){
+    text=text2;
      text2 = text.replaceAll('  ',' ');
     }
     text=text2;
@@ -41,6 +42,7 @@ globalThis.webscrapeFetch=async function(url,res){
 
     text2=text.replaceAll('\n\n','\n');
     while(text2!=text){
+      text=text2;
      text2 = text.replaceAll('\n\n','\n');
     }
     text=text2;
