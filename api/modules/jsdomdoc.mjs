@@ -21,7 +21,7 @@ globalThis.webscrapeFetch=async function(url,res){
     let links = document.querySelectorAll('a');
     let links_length = links.length;
     for(let i=0;i<links_length;i++){
-      link[i].innerHTML = link[i].href+' : '+links[i].innerHTML +'\n';
+      links[i].innerHTML = links[i].href+' : '+links[i].innerHTML +'\n';
     }
     let useless = document.querySelectorAll('style,script');
     const useless_length = useless.length;
