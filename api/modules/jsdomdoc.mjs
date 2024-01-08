@@ -39,7 +39,7 @@ globalThis.webscrapeFetch=async function(url,res){
     text=text2;
 
 
-    let text2=text.replaceAll('\n\n','\n');
+    text2=text.replaceAll('\n\n','\n');
     while(text2!=text){
      text2 = text.replaceAll('\n\n','\n');
     }
