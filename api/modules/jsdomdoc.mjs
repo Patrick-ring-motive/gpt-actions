@@ -31,13 +31,14 @@ globalThis.webscrapeFetch=async function(url,res){
       useless[i].remove();
     }
     text = `${document.body.textContent}`.replaceAll('\t',' ');
+    text=text.replaceAll('\n ','\n');
   
     let text2=text.replaceAll('  ',' ');
     while(text2!=text){
     text=text2;
      text2 = text.replaceAll('  ',' ');
     }
-    text=text2;
+    text=text2.replaceAll('\n ','\n');
 
 
     text2=text.replaceAll('\n\n','\n');
