@@ -10,7 +10,6 @@ import './modules/jsdomdoc.mjs';
 
 process.on('uncaughtException',e=>console.log(e));
 
-const hostTarget = 'nodejs.org';
 
 http.createServer(onRequest).listen(3000);
 
@@ -19,9 +18,7 @@ http.createServer(onRequest).listen(3000);
 
 
 async function onRequest(req, res) {
- /* console.log(req.url)*/
-  let localhost = req.headers['Host'];
-  
+
   if (req.url == '/ping') {
     res.statusCode = 200;
     return res.end();
@@ -35,6 +32,7 @@ async function onRequest(req, res) {
                        .replace('/corsFetch/','')
                        .replace('/','//')
                        .replace('///','//');
+    console.log(apiURLString);
     return webscrapeFetch(apiURLString);
   }
 
