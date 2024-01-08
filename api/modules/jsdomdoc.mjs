@@ -30,7 +30,21 @@ globalThis.webscrapeFetch=async function(url,res){
     for(let i=0;i<useless_length;i++){
       useless[i].remove();
     }
-    text = `${document.body.textContent}`;
+    text = `${document.body.textContent}`.replaceAll('\t',' ');
+  
+    let text2=text.replaceAll('  ',' ');
+    while(text2!=text){
+     text2 = text.replaceAll('  ',' ');
+    }
+    text=text2;
+
+
+    let text2=text.replaceAll('\n\n','\n');
+    while(text2!=text){
+     text2 = text.replaceAll('\n\n','\n');
+    }
+    text=text2;
+  
     text=text.slice(0,32000);
     res.setHeader('content-type','text/plain')
 
