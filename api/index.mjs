@@ -6,6 +6,7 @@ import './ecmascript.mjs';
 import './ecmascript-xml.mjs';
 import './en.json.mjs';
 import './modules/cse-fetch.mjs';
+import './modules/google-search.mjs';
 import './modules/jsdomdoc.mjs';
 
 process.on('uncaughtException',e=>console.log(e));
@@ -25,6 +26,9 @@ async function onRequest(req, res) {
   }
   if(req.url.startsWith('/searchfetch/')){
     return res.end(await searchfetch(req.url.split('/searchfetch/')[1]));
+  }
+  if(req.url.startsWith('/googlesearch/')){
+    return res.end(await searchfetch(req.url.split('/googlesearch/')[1]));
   }
   if(req.url.startsWith('/corsFetch/')){
     let apiURLString = req.url.split('/corsFetch/');
