@@ -23,7 +23,7 @@ globalThis.webscrapeFetch=async function(url,res){
     res.setHeader('content-type','text/plain')
 
 
-  response.setHeader('Acces-Control-Allow-Origin','*');
+  res.setHeader('Acces-Control-Allow-Origin','*');
 
   return res.end(text);
 
