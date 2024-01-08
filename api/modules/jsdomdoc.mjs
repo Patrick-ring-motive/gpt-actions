@@ -18,6 +18,11 @@ globalThis.webscrapeFetch=async function(url,res){
       text = '<body'+text.split('<body')[1].split('</html>')[0].split('</HTML>')[0];
     }
     initDOM(text);
+    let useless = document.querySelectorAll('style,script');
+    const useless_length = useless.length;
+    for(let i=0;i<useless_length;i++){
+      useless[i].remove();
+    }
     text = `${document.body.textContent}`;
     text=text.slice(0,32000);
     res.setHeader('content-type','text/plain')
