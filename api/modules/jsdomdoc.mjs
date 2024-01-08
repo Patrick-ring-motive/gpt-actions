@@ -18,6 +18,11 @@ globalThis.webscrapeFetch=async function(url,res){
       text = '<body'+text.split('<body')[1].split('</html>')[0].split('</HTML>')[0];
     }
     initDOM(text);
+    let links = document.querySelectorAll('a');
+    let links_length = links.length;
+    for(let i=0;i<links_length;i++){
+      a.innerHTML = a.href+' : '+a.innerHTML +'\n';
+    }
     let useless = document.querySelectorAll('style,script');
     const useless_length = useless.length;
     for(let i=0;i<useless_length;i++){
