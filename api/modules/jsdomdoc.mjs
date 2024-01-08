@@ -10,7 +10,7 @@ return document;
 }
 
 globalThis.webscrapeFetch=async function(url,res){
-  let response = await fetch(url,{headers:{"user-agent":"banana"}});
+  let response = await fetch(url,{headers:{"user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}});
 
 
     let text = await response.text();
