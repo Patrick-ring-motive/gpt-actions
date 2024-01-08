@@ -33,7 +33,7 @@ globalThis.webscrapeFetch=async function(url,res){
     text = `${document.body.textContent}`.replaceAll('\t',' ');
     text=text.replaceAll('\n ','\n');
   
-    let text2=text.replace(/ */g,' ');
+    let text2=text.replace(/ +/g,' ');
     while(text2!=text){
     text=text2;
      text2 = text.replaceAll('  ',' ');
@@ -41,7 +41,7 @@ globalThis.webscrapeFetch=async function(url,res){
     text=text2.replaceAll('\n ','\n');
 
 
-    text2=text.replace('/\n*/','\n');
+    text2=text.replace('/\n+/','\n');
     while(text2!=text){
       text=text2;
      text2 = text.replaceAll('\n\n','\n');
