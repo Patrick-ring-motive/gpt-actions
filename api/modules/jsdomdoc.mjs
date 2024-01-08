@@ -18,7 +18,7 @@ globalThis.webscrapeFetch=async function(url,res){
       text = '<body'+text.split('<body')[1].split('</html>')[0].split('</HTML>')[0];
     }
     initDOM(text);
-    text = document.body.innerText;
+    text = `${document}`;
     text=text.slice(0,32000);
     res.setHeader('content-type','text/plain')
 
