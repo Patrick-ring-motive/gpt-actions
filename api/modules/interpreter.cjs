@@ -18,7 +18,7 @@ globalThis.interpretCode = async function(code) {
          return eval(\`${decodeURIComponent(code).replaceAll('const ',' ').replaceAll('let ',' ').replace('var ',' ')}\`);
         }while('');
       }catch(e){
-        return e.message;
+        return util.inspect(e);
       }
     })().next();
   `);
@@ -36,7 +36,7 @@ globalThis.interpretCode = async function(code) {
              ${decodeURIComponent(code)};
             }while('');
         }catch(e){
-          return e.message;
+          return util.inspect(e);
         }
         }
       })().next();
@@ -49,7 +49,7 @@ globalThis.interpretCode = async function(code) {
             return eval(\`${decodeURIComponent(code)}\`);
             }while('');
           }catch(e){
-            return e.message;
+            return util.inspect(e);
           }
         })().next();
         `);
@@ -64,7 +64,7 @@ globalThis.interpretCode = async function(code) {
             return ${decodeURIComponent(code).replace('return','')};
             }while('');
           }catch(e){
-            return e.message;
+            return util.inspect(e);
           }
         })().next();
       `);
@@ -86,10 +86,10 @@ globalThis.interpretCode = async function(code) {
   }
   output = `${output}`;
   if(log.trim().length==0){
-  return output;
+ // return output;
   }
   if((output.trim().length==0)||(output.includes('value: undefined'))){
-  return log;
+ // return log;
   }
   return 'return: '+output+'|log: '+log;
 }
