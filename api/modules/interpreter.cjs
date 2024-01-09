@@ -1,7 +1,10 @@
 globalThis.interpretCode = async function(code) {
 
-  let output =''; 
+  let output ='';
+  let log = '';
   try{
+    console.backuplog=console.log;
+    console.log = function(){log+=`${arguments}`;}
     output = await `${await eval(`
     (async function(){
       try{
@@ -14,5 +17,5 @@ globalThis.interpretCode = async function(code) {
   }catch(e){
     output = e.message;
   }
-  return output;
+  return 'return: '+output+'|log: '+log;
 }
