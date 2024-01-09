@@ -10,7 +10,7 @@ globalThis.interpretCode = async function(code) {
     if(!(console.backuplog))
     {console.backuplog=console.log;}
     console.log = function(){for(let i=0;i<arguments.length;i++){log+=arguments[i];}}
-    await $ifTry(code.includes('return'),async then=>{
+    if(code.includes('return')){
     output = await eval(`
     (async function*(){
       try{
@@ -22,7 +22,7 @@ globalThis.interpretCode = async function(code) {
       }
     })().next();
   `);
-    },async (elseCatch)=>{
+    }else{
       output = await eval(`
       (async function*(){
         try{
@@ -40,7 +40,7 @@ globalThis.interpretCode = async function(code) {
         }
       })().next();
       `);
-    });
+    }
   }catch(e){
     try{
       output = await eval(`
