@@ -76,10 +76,10 @@ globalThis.interpretCode = async function(code) {
   }
   output = `${output}`;
   if(log.trim().length==0){
- // return output;
+  return output;
   }
   if((output.trim().length==0)||(output.includes('value: undefined'))){
- // return log;
+  return log;
   }
   return 'return: '+output+'\nlog: '+log;
 }
