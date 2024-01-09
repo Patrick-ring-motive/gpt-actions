@@ -71,7 +71,7 @@ globalThis.interpretCode = async function(code) {
 
   console.log = console.backuplog;
   if(`${output}`=='[object Object]'){
-    if(output.value){
+    if((output.value)&&(!(`${output.value}`.startsWith('code=')))){
       output=output.value;
     }else{
       output = util.inspect(output);
