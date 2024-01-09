@@ -11,10 +11,16 @@ globalThis.interpretCode = async function(code) {
     (async function*(){
       try{
         do{
-        ${decodeURIComponent(code)};
+        return ${decodeURIComponent(code)};
         }while('');
       }catch(e){
+        try{
+          do{
+           ${decodeURIComponent(code)};
+          }while('');
+      }catch(e){
         return e.message;
+      }
       }
     })().next();
   `)}`;
