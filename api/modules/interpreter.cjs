@@ -11,7 +11,7 @@ globalThis.interpretCode = async function(code) {
     {console.backuplog=console.log;}
     console.log = function(){for(let i=0;i<arguments.length;i++){log+=arguments[i];}}
     if(code.includes('return')){
-    output = eval(`${decodeURIComponent(code).replaceAll('const ',' ').replaceAll('let ',' ').replace('var ',' ')}`);
+    output = eval(`${decodeURIComponent(code)}`);
     }else{
       try{
       output = await eval(`
