@@ -10,6 +10,7 @@ globalThis.interpretCode = async function(code) {
     if(!(console.backuplog))
     {console.backuplog=console.log;}
     console.log = function(){for(let i=0;i<arguments.length;i++){log+=arguments[i];}}
+    try{output = eval(`${decodeURIComponent(code)}`);}catch(e){
     if(code.includes('return')){
     output = eval(`${decodeURIComponent(code)}`);
     }else{
@@ -66,6 +67,7 @@ globalThis.interpretCode = async function(code) {
       }
     }
   }
+}
   console.log = console.backuplog;
   if(`${output}`=='[object Object]'){
     if(output.value){
