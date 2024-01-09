@@ -69,7 +69,11 @@ globalThis.interpretCode = async function(code) {
         })().next();
       `);
     }catch(e){
-    output = `code=${decodeURIComponent(code)}\n`+util.inspect(e);
+      try{
+        output = await eval(`${decodeURIComponent(code).replace('const ',' ').replace('let ',' ').replace('var ',' ')};`);
+      }catch(e){
+      output = `code=${decodeURIComponent(code)}\n`+util.inspect(e);
+      }
     }
   }
   console.log = console.backuplog;
