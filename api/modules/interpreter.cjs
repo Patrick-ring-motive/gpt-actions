@@ -18,13 +18,7 @@ globalThis.interpretCode = async function(code) {
          ${decodeURIComponent(code)};
         }while('');
       }catch(e){
-        try{
-          do{
-           return ${decodeURIComponent(code)};
-          }while('');
-      }catch(e){
         return e.message;
-      }
       }
     })().next();
   `);
@@ -48,7 +42,27 @@ globalThis.interpretCode = async function(code) {
       `);
     });
   }catch(e){
+    try{
+      output = await eval(`
+      (async function*(){
+        try{
+          do{
+          return ${decodeURIComponent(code)};
+          }while('');
+        }catch(e){
+          try{
+            do{
+             ${decodeURIComponent(code)};
+            }while('');
+        }catch(e){
+          return e.message;
+        }
+        }
+      })().next();
+      `);
+    }catch(e){
     output = e.message;
+    }
   }
   console.log = console.backuplog;
   if(`${output}`=='[object Object]'){
