@@ -29,9 +29,9 @@ globalThis.interpretCode = async function(code) {
     output = e.message;
   }
   console.log = console.backuplog;
-  /*if(`${output}`=='[object Object]'){
+  if(`${output}`=='[object Object]'){
     output = util.inspect(output);
-  }*/
+  }
   output = `${output}`;
   if(log.trim().length==0){
   return output;
