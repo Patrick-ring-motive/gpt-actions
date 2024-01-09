@@ -8,13 +8,15 @@ globalThis.interpretCode = async function(code) {
     console.log = function(){for(let i=0;i<arguments;i++){log+=arguments[i];}}
     
     output = await `${await eval(`
-    (async function(){
+    (async function*(){
       try{
-        return ${decodeURIComponent(code)};
+        do{
+        ${decodeURIComponent(code)};
+        }while('');
       }catch(e){
         return e.message;
       }
-    })();
+    })().next();
   `)}`;
   }catch(e){
     output = e.message;
