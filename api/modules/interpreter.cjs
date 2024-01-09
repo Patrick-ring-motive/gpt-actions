@@ -7,17 +7,17 @@ globalThis.interpretCode = async function(code) {
     if(!(console.backuplog))
     {console.backuplog=console.log;}
     console.log = function(){for(let i=0;i<arguments.length;i++){log+=arguments[i];}}
-    
+    if(code.includes('return')){
     output = await eval(`
     (async function*(){
       try{
         do{
-        return ${decodeURIComponent(code)};
+         ${decodeURIComponent(code)};
         }while('');
       }catch(e){
         try{
           do{
-           ${decodeURIComponent(code)};
+           return ${decodeURIComponent(code)};
           }while('');
       }catch(e){
         return e.message;
@@ -25,6 +25,25 @@ globalThis.interpretCode = async function(code) {
       }
     })().next();
   `);
+    }else{
+      output = await eval(`
+      (async function*(){
+        try{
+          do{
+          return ${decodeURIComponent(code)};
+          }while('');
+        }catch(e){
+          try{
+            do{
+             ${decodeURIComponent(code)};
+            }while('');
+        }catch(e){
+          return e.message;
+        }
+        }
+      })().next();
+      `);
+    }
   }catch(e){
     output = e.message;
   }
