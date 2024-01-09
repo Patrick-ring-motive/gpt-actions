@@ -41,7 +41,13 @@ async function onRequest(req, res) {
     return webscrapeFetch(apiURLString,res);
   }
   if(req.url.startsWith('/js-interpret/')){
-    return res.end(await interpretCode(req.url.split('/js-interpret/')[1]));
+    let code = req.url.split('/js-interpret/')[1];
+    req.on('readable',_=>{code+=req.read()||'';});
+    code = await new Promise(resolve=>{req.on('end',resolve);});
+    if(code.trim()==''){
+      
+    }
+    return res.end(await interpretCode(code));
   }
 
 return res.end('done');
