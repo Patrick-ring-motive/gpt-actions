@@ -11,17 +11,7 @@ globalThis.interpretCode = async function(code) {
     {console.backuplog=console.log;}
     console.log = function(){for(let i=0;i<arguments.length;i++){log+=arguments[i];}}
     if(code.includes('return')){
-    output = await eval(`
-    (async function*(){
-      try{
-        do{
-         return eval(\`${decodeURIComponent(code).replaceAll('const ',' ').replaceAll('let ',' ').replace('var ',' ')}\`);
-        }while('');
-      }catch(e){
-        return util.inspect(e);
-      }
-    })().next();
-  `);
+    output = eval(`${decodeURIComponent(code).replaceAll('const ',' ').replaceAll('let ',' ').replace('var ',' ')}`);
     }else{
       try{
       output = await eval(`
@@ -91,5 +81,5 @@ globalThis.interpretCode = async function(code) {
   if((output.trim().length==0)||(output.includes('value: undefined'))){
  // return log;
   }
-  return 'return: '+output+'|log: '+log;
+  return 'return: '+output+'\nlog: '+log;
 }
