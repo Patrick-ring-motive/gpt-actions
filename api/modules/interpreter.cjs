@@ -1,3 +1,4 @@
+const util = require('node:util'); 
 globalThis.interpretCode = async function(code) {
 
   let output ='';
@@ -7,7 +8,7 @@ globalThis.interpretCode = async function(code) {
     {console.backuplog=console.log;}
     console.log = function(){for(let i=0;i<arguments;i++){log+=arguments[i];}}
     
-    output = await `${await eval(`
+    output = await eval(`
     (async function*(){
       try{
         do{
@@ -23,11 +24,15 @@ globalThis.interpretCode = async function(code) {
       }
       }
     })().next();
-  `)}`;
+  `);
   }catch(e){
     output = e.message;
   }
-  console.loge = console.backuplog;
+  console.log = console.backuplog;
+  if(`${output}`=='[object Object]'){
+    output = util.inspect(output);
+  }
+  output = `${output}`;
   if(log.trim().length==0){
   return output;
   }
