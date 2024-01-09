@@ -61,7 +61,7 @@ globalThis.interpretCode = async function(code) {
         (async function*(){
           try{
             do{
-            return eval(\`${decodeURIComponent(code)}\`);
+            return eval(\`${decodeURIComponent(code).replace('return','')}\`);
             }while('');
           }catch(e){
             return e.message;
