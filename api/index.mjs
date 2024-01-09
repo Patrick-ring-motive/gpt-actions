@@ -40,13 +40,14 @@ async function onRequest(req, res) {
     console.log(apiURLString);
     return webscrapeFetch(apiURLString,res);
   }
-  if(req.url.startsWith('/js-interpret/')){
-    let code = req.url.split('/js-interpret/')[1];
+  if(req.url.startsWith('/js-interpret')){
+    let code = req.url.replace('/js-interpret/','/js-interpret').split('/js-interpret')[1];
 
     if((!code)||(code.trim()=='')){
       req.on('readable',_=>{code+=req.read()||'';});
       code = await new Promise(resolve=>{req.on('end',resolve);});
     }
+    
     return res.end(await interpretCode(code));
   }
 
