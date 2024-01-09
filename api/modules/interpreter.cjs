@@ -4,7 +4,8 @@ globalThis.interpretCode = async function(code) {
   let log = '';
   try{
     console.backuplog=console.log;
-    console.log = function(){log+=`${arguments}`;}
+    console.log = function(){for(let i=0;i<arguments;i++){log+=arguments[i];}}
+    
     output = await `${await eval(`
     (async function(){
       try{
