@@ -30,7 +30,11 @@ globalThis.interpretCode = async function(code) {
   }
   console.log = console.backuplog;
   if(`${output}`=='[object Object]'){
-    output = util.inspect(output);
+    if(output.value){
+      output=output.value;
+    }else{
+      output = util.inspect(output);
+    }
   }
   output = `${output}`;
   if(log.trim().length==0){
