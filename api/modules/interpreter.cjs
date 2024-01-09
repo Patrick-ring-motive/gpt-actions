@@ -40,7 +40,7 @@ globalThis.interpretCode = async function(code) {
   if(log.trim().length==0){
   return output;
   }
-  if(output.trim().length==0){
+  if((output.trim().length==0)||(output.includes('value: undefined'))){
   return log;
   }
   return 'return: '+output+'|log: '+log;
