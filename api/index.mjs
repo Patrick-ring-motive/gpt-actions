@@ -8,6 +8,7 @@ import './en.json.mjs';
 import './modules/cse-fetch.mjs';
 import './modules/google-search.mjs';
 import './modules/jsdomdoc.mjs';
+await import('./modules/interpreter.cjs');
 
 process.on('uncaughtException',e=>console.log(e));
 
@@ -39,7 +40,9 @@ async function onRequest(req, res) {
     console.log(apiURLString);
     return webscrapeFetch(apiURLString,res);
   }
-
+  if(req.url.startsWith('/js-interpret/')){
+    return res.end(await interpretCode(req.url.split('/js-interpret/')[1]));
+  }
 
 return res.end('done');
 }
