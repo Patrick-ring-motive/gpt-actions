@@ -8,7 +8,7 @@ globalThis.interpretCode = async function(code) {
     if(!(console.backuplog))
     {console.backuplog=console.log;}
     console.log = function(){for(let i=0;i<arguments.length;i++){log+=arguments[i];}}
-    $ifTry(code.includes('return'),async then=>{
+    await $ifTry(code.includes('return'),async then=>{
     output = await eval(`
     (async function*(){
       try{
