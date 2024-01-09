@@ -46,6 +46,7 @@ globalThis.interpretCode = async function(code) {
         `);
       }
     }
+    }
   }catch(e){
     try{
       output = await eval(`
@@ -67,7 +68,7 @@ globalThis.interpretCode = async function(code) {
       }
     }
   }
-}
+
   console.log = console.backuplog;
   if(`${output}`=='[object Object]'){
     if(output.value){
