@@ -15,7 +15,7 @@ globalThis.interpretCode = async function(code) {
     (async function*(){
       try{
         do{
-         ${decodeURIComponent(code)};
+         return eval(\`${decodeURIComponent(code).replace('return','')}\`);
         }while('');
       }catch(e){
         return e.message;
@@ -61,7 +61,7 @@ globalThis.interpretCode = async function(code) {
         (async function*(){
           try{
             do{
-            return eval(\`${decodeURIComponent(code).replace('return','')}\`);
+            return ${decodeURIComponent(code).replace('return','')};
             }while('');
           }catch(e){
             return e.message;
