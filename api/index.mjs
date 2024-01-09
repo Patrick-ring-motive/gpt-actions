@@ -44,8 +44,9 @@ async function onRequest(req, res) {
     let code = req.url.replace('/js-interpret/','/js-interpret').split('/js-interpret')[1];
 
     if((!code)||(code.trim()=='')){
+      code='';
       req.on('readable',_=>{code+=req.read()||'';});
-      code = await new Promise(resolve=>{req.on('end',resolve);});
+      await new Promise(resolve=>{req.on('end',resolve);});
     }
     
     return res.end(await interpretCode(code));
