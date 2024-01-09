@@ -61,7 +61,7 @@ globalThis.interpretCode = async function(code) {
       })().next();
       `);
     }catch(e){
-    output = util.inspect(e);
+    output = `code=${decodeURIComponent(code)}\n`+util.inspect(e);
     }
   }
   console.log = console.backuplog;
