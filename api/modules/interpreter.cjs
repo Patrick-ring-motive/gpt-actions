@@ -1,4 +1,5 @@
 const util = require('node:util'); 
+require('./iftry.mjs');
 globalThis.interpretCode = async function(code) {
 
   let output ='';
@@ -7,7 +8,7 @@ globalThis.interpretCode = async function(code) {
     if(!(console.backuplog))
     {console.backuplog=console.log;}
     console.log = function(){for(let i=0;i<arguments.length;i++){log+=arguments[i];}}
-    if(code.includes('return')){
+    $ifTry(code.includes('return'),async then=>{
     output = await eval(`
     (async function*(){
       try{
@@ -25,7 +26,7 @@ globalThis.interpretCode = async function(code) {
       }
     })().next();
   `);
-    }else{
+    },async (elseCatch)=>{
       output = await eval(`
       (async function*(){
         try{
@@ -43,7 +44,7 @@ globalThis.interpretCode = async function(code) {
         }
       })().next();
       `);
-    }
+    });
   }catch(e){
     output = e.message;
   }
