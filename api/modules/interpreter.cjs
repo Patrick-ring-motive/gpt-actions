@@ -1,7 +1,9 @@
 const util = require('node:util'); 
-require('./iftry.mjs');
+let ifTryPromise = import('./iftry.mjs');
 globalThis.interpretCode = async function(code) {
-
+  if(!globalThis.ifTry){
+    await ifTryPromise;
+  }
   let output ='';
   let log = '';
   try{
