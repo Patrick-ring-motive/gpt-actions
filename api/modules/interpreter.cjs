@@ -81,7 +81,7 @@ globalThis.interpretCode = async function(code) {
   if(log.trim().length==0){
   return output;
   }
-  if((output.trim().length==0)||(output.includes('value: undefined'))){
+  if((output.trim().length==0)||(output.includes('value: undefined'))||(output=='undefined')){
   return log;
   }
   return 'return: '+output+'\nlog: '+log;
