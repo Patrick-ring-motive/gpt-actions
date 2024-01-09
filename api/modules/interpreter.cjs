@@ -61,7 +61,7 @@ globalThis.interpretCode = async function(code) {
       })().next();
       `);
     }catch(e){
-    output = e.message;
+    output = util.inspect(e);
     }
   }
   console.log = console.backuplog;
