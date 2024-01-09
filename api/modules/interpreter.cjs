@@ -23,6 +23,7 @@ globalThis.interpretCode = async function(code) {
     })().next();
   `);
     }else{
+      try{
       output = await eval(`
       (async function*(){
         try{
@@ -40,6 +41,19 @@ globalThis.interpretCode = async function(code) {
         }
       })().next();
       `);
+      }catch(e){
+        output = await eval(`
+        (async function*(){
+          try{
+            do{
+             ${decodeURIComponent(code)};
+            }while('');
+          }catch(e){
+            return e.message;
+          }
+        })().next();
+        `);
+      }
     }
   }catch(e){
     try{
