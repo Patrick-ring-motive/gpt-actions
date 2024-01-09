@@ -2,7 +2,7 @@ globalThis.interpretCode = async function(code) {
 
   let output =''; 
   try{
-    output = await `${eval(`
+    output = await `${await eval(`
     (async function(){
       try{
         return ${decodeURIComponent(code)};
