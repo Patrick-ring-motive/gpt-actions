@@ -26,10 +26,12 @@ async function onRequest(req, res) {
     return res.end();
   }
   if(req.url.startsWith('/searchfetch/')){
-    return res.end(await searchfetch(req.url.split('/searchfetch/')[1]));
+    let query = req.url.replace('/searchfetch/','/searchfetch').split('/searchfetch')[1].replace('?query=','');
+    return res.end(await searchfetch(query));
   }
   if(req.url.startsWith('/googlesearch/')){
-    return res.end(await googlesearch(req.url.split('/googlesearch/')[1]));
+    let query = req.url.replace('/googlesearch/','/googlesearch').split('/googlesearch')[1].replace('?query=','');
+    return res.end(await googlesearch(query));
   }
   if(req.url.startsWith('/corsFetch/')){
     let apiURLString = req.url.split('/corsFetch/');
