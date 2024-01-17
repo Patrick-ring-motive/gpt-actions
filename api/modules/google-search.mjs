@@ -6,8 +6,9 @@ globalThis.googlesearch = async function (query){
 let cx = 'a1e5f54f854494cd5';
 let cxurl = 'https://cse.google.com/cse.js?hpg=1&cx=' + cx;
 
-let script_raw = await fetchText(cxurl);
+
 if(!globalThis.cse_tok){
+let script_raw = await fetchText(cxurl);
 globalThis.google_cse_tok = JSONExtract(script_raw, "cse_token");
 }
 
