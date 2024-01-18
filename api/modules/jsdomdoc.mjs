@@ -20,7 +20,10 @@ globalThis.webscrapeFetch=async function(url,res){
     if(text.includes('<body')){
       text = '<body'+text.split('<body')[1].split('</html>')[0].split('</HTML>')[0];
     }
-    initDOM(text);
+
+
+  text = await stripDOM(text);
+    /*initDOM(text);
     let links = document.querySelectorAll('a');
     let links_length = links.length;
     for(let i=0;i<links_length;i++){
@@ -52,9 +55,9 @@ globalThis.webscrapeFetch=async function(url,res){
      text2 = text.replaceAll('\n\n','\n');
       count++;
     }
-    text=text2;
+    text=text2;*/
   
-    text=text.slice(0,32000);
+    text=text.slice(0,50000);
     res.setHeader('content-type','text/plain')
 
 
@@ -73,12 +76,7 @@ globalThis.wikiscrapeFetch=async function(url,res){
    if(text.includes('id="mw-content-text"')){
       text = text.split('id="mw-content-text"')[1];
       }
-    if(text.includes('<main')){
-      text = '<main'+text.split('<main')[1].split('</main>')[0];
-    }
-    text = text.replace(/<style.*\/style>/g,'')
-      .replace(/<script.*\/script>/g,'')
-      .replace(/<[^>]*>/g,'');
+
    // text = await Promise.race([timeoutDOM(text)],stripDOM(text));
   text= await stripDOM(text);
   
@@ -94,21 +92,13 @@ globalThis.wikiscrapeFetch=async function(url,res){
 
 
 async function stripDOM(text){
+  if(text.includes('<main')){
+    text = '<main'+text.split('<main')[1].split('</main>')[0];
+  }
+  text = text.replace(/<style.*\/style>/g,'')
+    .replace(/<script.*\/script>/g,'')
+    .replace(/<[^>]*>/g,'');
 
- /* initDOM(text);
-  let links = document.querySelectorAll('a');
-  let links_length = links.length;
-  for(let i=0;i<links_length;i++){
-    if(links[i].href.startsWith('http')){
-     links[i].innerHTML = links[i].href+' : '+links[i].innerHTML +'\n';
-    }
-  }
-  let useless = document.querySelectorAll('style,script');
-  const useless_length = useless.length;
-  for(let i=0;i<useless_length;i++){
-   useless[i].remove();
-  }
-  text = `${document.body.textContent}`.replaceAll('\t',' ');*/
   text = text.replaceAll('\t',' ');
   text=text.replaceAll('\n ','\n');
 
