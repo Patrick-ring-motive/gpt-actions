@@ -70,13 +70,16 @@ globalThis.wikiscrapeFetch=async function(url,res){
 
 
     let text = await response.text();
+   if(text.includes('id="mw-content-text"'){
+      text = text.split('id="mw-content-text"')[1];
+      }
     if(text.includes('<main')){
       text = '<main'+text.split('<main')[1].split('</main>')[0];
     }
   
    // text = await Promise.race([timeoutDOM(text)],stripDOM(text));
   
-    text=text.slice(0,32000);
+    text=text.slice(0,50000);
     res.setHeader('content-type','text/plain')
 
 
