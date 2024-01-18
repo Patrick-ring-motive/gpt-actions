@@ -70,7 +70,7 @@ globalThis.wikiscrapeFetch=async function(url,res){
 
 
     let text = await response.text();
-   if(text.includes('id="mw-content-text"'){
+   if(text.includes('id="mw-content-text"')){
       text = text.split('id="mw-content-text"')[1];
       }
     if(text.includes('<main')){
