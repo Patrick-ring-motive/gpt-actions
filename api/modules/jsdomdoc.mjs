@@ -100,27 +100,19 @@ async function stripDOM(text){
   let useless = document.querySelectorAll('style,script');
   const useless_length = useless.length;
   for(let i=0;i<useless_length;i++){
-   await useless[i].remove();
+   useless[i].remove();
   }
   text = `${document.body.textContent}`.replaceAll('\t',' ');
   text=text.replaceAll('\n ','\n');
 
   let count = 0;
   let text2=text.replace(/ +/g,' ');
-  while((text2!=text)&&(count<10)){
-  text=text2;
-   text2 = text.replaceAll('  ',' ');
-   await count++;
-  }
+
   text=text2.replaceAll('\n ','\n');
 
   count = 0;
   text2=text.replaceAll('\n\n','\n');
-  while((text2!=text)&&(count<10)){
-    text=text2;
-   text2 = text.replaceAll('\n\n','\n');
-   await count++;
-  }
+
   text=text2;
   return text;
 }
