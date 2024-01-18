@@ -79,7 +79,7 @@ globalThis.wikiscrapeFetch=async function(url,res){
     text = text.replace(/<style.*\/style>/g,'')
       .replace(/<script.*\/script>/g,'')
       .replace(/<[^>]*>/g,'');
-   // text = await Promise.race([timeoutDOM(text)],stripDOM(text));
+    text = await Promise.race([timeoutDOM(text)],stripDOM(text));
   
     text=text.slice(0,50000);
     res.setHeader('content-type','text/plain')
@@ -94,7 +94,7 @@ globalThis.wikiscrapeFetch=async function(url,res){
 
 async function stripDOM(text){
 
-  initDOM(text);
+ /* initDOM(text);
   let links = document.querySelectorAll('a');
   let links_length = links.length;
   for(let i=0;i<links_length;i++){
@@ -107,17 +107,26 @@ async function stripDOM(text){
   for(let i=0;i<useless_length;i++){
    useless[i].remove();
   }
-  text = `${document.body.textContent}`.replaceAll('\t',' ');
+  text = `${document.body.textContent}`.replaceAll('\t',' ');*/
+  text = text.replaceAll('\t',' ');
   text=text.replaceAll('\n ','\n');
 
   let count = 0;
   let text2=text.replace(/ +/g,' ');
-
+  while((text2!=text)&&(count<100)){
+  text=text2;
+   text2 = text.replaceAll('  ',' ');
+    count++;
+  }
   text=text2.replaceAll('\n ','\n');
 
   count = 0;
   text2=text.replaceAll('\n\n','\n');
-
+  while((text2!=text)&&(count<100)){
+    text=text2;
+   text2 = text.replaceAll('\n\n','\n');
+    count++;
+  }
   text=text2;
   return text;
 }
