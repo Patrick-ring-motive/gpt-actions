@@ -74,7 +74,7 @@ globalThis.wikiscrapeFetch=async function(url,res){
       text = '<main'+text.split('<main')[1].split('</main>')[0];
     }
   
-    text = await Promise.race([timeoutDOM(text)],stripDOM(text));
+   // text = await Promise.race([timeoutDOM(text)],stripDOM(text));
   
     text=text.slice(0,32000);
     res.setHeader('content-type','text/plain')
