@@ -44,7 +44,11 @@ async function onRequest(req, res) {
   }
 
   if(req.url.startsWith('/wiki/')){
-  let wikiURLString = 'https://script.google.com/macros/s/AKfycbxC7sB6VHSpH4CxY49wSioMqK65WvEvWEVXL-AAZ38RJ4d-vSPa5vgdks6RIdr1t1KGFA/exec'+req.url.replace('/wiki/','');
+    let q='';
+    if(!req.url.includes('?')){
+      q='?';
+    }
+  let wikiURLString = 'https://script.google.com/macros/s/AKfycbxC7sB6VHSpH4CxY49wSioMqK65WvEvWEVXL-AAZ38RJ4d-vSPa5vgdks6RIdr1t1KGFA/exec'+q+req.url.replace('/wiki/','');
     console.log(wikiURLString);
     return wikiscrapeFetch(wikiURLString,res);
   }
