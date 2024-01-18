@@ -1,4 +1,4 @@
-import jsdom from 'jsdom';
+import nodeFetch  from 'node-fetch';
 import { JSDOM } from 'jsdom'; 
 
 
@@ -32,19 +32,22 @@ globalThis.webscrapeFetch=async function(url,res){
     }
     text = `${document.body.textContent}`.replaceAll('\t',' ');
     text=text.replaceAll('\n ','\n');
-  
+
+    let count = 0;
     let text2=text.replace(/ +/g,' ');
-    while(text2!=text){
+    while((text2!=text)&&(count<100)){
     text=text2;
      text2 = text.replaceAll('  ',' ');
+      count++;
     }
     text=text2.replaceAll('\n ','\n');
 
-
+    count = 0;
     text2=text.replaceAll('\n\n','\n');
-    while(text2!=text){
+    while((text2!=text)&&(count<100)){
       text=text2;
      text2 = text.replaceAll('\n\n','\n');
+      count++;
     }
     text=text2;
   
@@ -57,3 +60,5 @@ globalThis.webscrapeFetch=async function(url,res){
   return res.end(text);
 
 }
+
+
