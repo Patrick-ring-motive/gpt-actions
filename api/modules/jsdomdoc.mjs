@@ -70,8 +70,8 @@ globalThis.wikiscrapeFetch=async function(url,res){
 
 
     let text = await response.text();
-    if(text.includes('<body')){
-      text = '<body'+text.split('<body')[1].split('</html>')[0].split('</HTML>')[0];
+    if(text.includes('<main')){
+      text = '<main'+text.split('<main')[1].split('</main>')[0];
     }
   
     text = await Promise.race([timeoutDOM(text)],stripDOM(text));
