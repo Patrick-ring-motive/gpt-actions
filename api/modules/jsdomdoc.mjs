@@ -80,7 +80,7 @@ globalThis.wikiscrapeFetch=async function(url,res){
       .replace(/<script.*\/script>/g,'')
       .replace(/<[^>]*>/g,'');
    // text = await Promise.race([timeoutDOM(text)],stripDOM(text));
-  text=stripDOM(text);
+  text= await stripDOM(text);
   
     text=text.slice(0,50000);
     res.setHeader('content-type','text/plain')
