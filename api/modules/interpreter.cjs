@@ -3,15 +3,15 @@ const util = require('node:util');
 const fs = require('fs/promises');
 
 async function writeCodeAsync(code) {
+  let id = new Date().getTime();
   try {
-    await fs.writeFile('/tmp/module.mjs', code);
+    await fs.writeFile(`/tmp/module${id}.mjs`, code);
     console.log('File written successfully');
   } catch (error) {
     console.error('Error writing file:', error);
   }
 }
 
-writeFileAsync();
 
 
 let ifTryPromise = import('./iftry.mjs');
@@ -38,8 +38,8 @@ let strict = '';
     try{
       if(options?.module){
        //output = await import(`data:text/javascript,${strict}${decodeURIComponent(code)}`);
-        await writeCodeAsync(decodeURIComponent(code));
-        output = await import(`/tmp/module.mjs`);
+        let id = await writeCodeAsync(decodeURIComponent(code));
+        output = await import(`/tmp/module${id}.mjs`);
       }else{
         if(options?.async){
         output = await eval(`${strict}${decodeURIComponent(code)}`);
