@@ -1,4 +1,19 @@
 const util = require('node:util'); 
+
+const fs = require('fs/promises');
+
+async function writeCodeAsync(code) {
+  try {
+    await fs.writeFile('/tmp/module.mjs', code);
+    console.log('File written successfully');
+  } catch (error) {
+    console.error('Error writing file:', error);
+  }
+}
+
+writeFileAsync();
+
+
 let ifTryPromise = import('./iftry.mjs');
 globalThis.interpretCode = async function(code,options) {
   if(!globalThis.ifTry){
@@ -22,7 +37,9 @@ let strict = '';
   
     try{
       if(options?.module){
-       output = await import(`data:text/javascript,${strict}${decodeURIComponent(code)}`);
+       //output = await import(`data:text/javascript,${strict}${decodeURIComponent(code)}`);
+        await writeCodeAsync(decodeURIComponent(code));
+        output = await import(`/tmp/module.mjs`);
       }else{
         if(options?.async){
         output = await eval(`${strict}${decodeURIComponent(code)}`);
@@ -57,3 +74,5 @@ let strict = '';
   }
   return 'return: '+output+'\nlog: '+log;
 }
+
+
