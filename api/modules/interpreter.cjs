@@ -1,6 +1,6 @@
 const util = require('node:util'); 
 let ifTryPromise = import('./iftry.mjs');
-globalThis.interpretCode = async function(code) {
+globalThis.interpretCode = async function(code,options) {
   if(!globalThis.ifTry){
     await ifTryPromise;
   }
@@ -11,9 +11,22 @@ globalThis.interpretCode = async function(code) {
     if(!(console.backuplog))
     {console.backuplog=console.log;}
     console.log = function(){for(let i=0;i<arguments.length;i++){log+=arguments[i];}}
+
+let strict = '';
+
+  if(options?.strict){
+    strict = '"use ' + 'strict";';
+  }
+  
+
   
     try{
-      output = await eval(`${decodeURIComponent(code)}`);
+
+      if(options?.async){
+      output = await eval(`${strict}${decodeURIComponent(code)}`);
+      }else{
+        output = eval(`${strict}${decodeURIComponent(code)}`);
+      }
     }catch(e){
       if(!output){
         output = e;

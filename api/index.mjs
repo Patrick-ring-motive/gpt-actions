@@ -55,15 +55,37 @@ async function onRequest(req, res) {
 
   
   if(req.url.startsWith('/js-interpret')){
+    let options = {
+        strict:false,
+        async:true,
+        module:false
+    }
+    let requrl = new URL(req.url, `https://${req.headers.host}`); 
+    let params = requrl.searchParams;
     let code = req.url.replace('/js-interpret/','/js-interpret').split('/js-interpret')[1].replace('?code=','');
+
+    if(params.has('code')){
+      code=params.get('code');
+    }
+    if(params.has('strict')&&(params.get('strict')=='true')){
+      options.strict = true;
+    }
+    if(params.has('async')&&(params.get('async')=='false')){
+      options.async = false;
+    }
+    if(params.has('module')&&(params.get('strict')=='true')){
+      options.module = true;
+    }
 
     if((!code)||(code.trim()=='')){
       code='';
       req.on('readable',_=>{code+=req.read()||'';});
       await new Promise(resolve=>{req.on('end',resolve);});
     }
+
+  
     
-    return res.end(await interpretCode(code));
+    return res.end(await interpretCode(code,options));
   }
 
 return res.end('done');
