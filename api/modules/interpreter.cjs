@@ -10,6 +10,7 @@ async function writeCodeAsync(code) {
   } catch (error) {
     console.error('Error writing file:', error);
   }
+  return id;
 }
 
 
