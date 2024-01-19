@@ -6,69 +6,20 @@ globalThis.interpretCode = async function(code) {
   }
   let output ='';
   let log = '';
-  try{
+ 
+  
     if(!(console.backuplog))
     {console.backuplog=console.log;}
     console.log = function(){for(let i=0;i<arguments.length;i++){log+=arguments[i];}}
-    try{output = await eval(`${decodeURIComponent(code)}`);}catch(e){
-    if(code.includes('return')){
-    output = eval(`${decodeURIComponent(code)}`);
-    }else{
-      try{
-      output = await eval(`
-      (async function*(){
-        try{
-          do{
-          return ${decodeURIComponent(code)};
-          }while('');
-        }catch(e){
-          try{
-            do{
-             ${decodeURIComponent(code)};
-            }while('');
-        }catch(e){
-          return util.inspect(e);
-        }
-        }
-      })().next();
-      `);
-      }catch(e){
-        output = await eval(`
-        (async function*(){
-          try{
-            do{
-            return eval(\`${decodeURIComponent(code)}\`);
-            }while('');
-          }catch(e){
-            return util.inspect(e);
-          }
-        })().next();
-        `);
-      }
-    }
-    }
-  }catch(e){
+  
     try{
-      output = await eval(`
-        (async function*(){
-          try{
-            do{
-            return ${decodeURIComponent(code).replace('return','')};
-            }while('');
-          }catch(e){
-            return util.inspect(e);
-          }
-        })().next();
-      `);
+      output = await eval(`${decodeURIComponent(code)}`);
     }catch(e){
-      try{
-        output = await eval(`${decodeURIComponent(code).replaceAll('const ',' ').replaceAll('let ',' ').replace('var ',' ').replace('return ',' ')};`);
-      }catch(e){
-      output = `code=${decodeURIComponent(code)}\n`+util.inspect(e);
+      if(!output){
+        output = e;
       }
     }
-  }
-
+ 
   console.log = console.backuplog;
   if(`${output}`=='[object Object]'){
     if((output.value)&&(!(`${output.value}`.startsWith('code=')))){
