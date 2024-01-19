@@ -81,7 +81,11 @@ globalThis.interpretCode = async function(code) {
   if(log.trim().length==0){
   return output;
   }
-  if((output.trim().length==0)||(output.includes('value: undefined'))||(output=='undefined')){
+  if((output.trim().length==0)||(output.includes('value: undefined'))||(`${output}`=='undefined')){
+
+    if((!log)||(`${log}`=='undefined')){
+      return "No valid values logged or returned. Try loggin output to the console.";
+    }
   return log;
   }
   return 'return: '+output+'\nlog: '+log;
