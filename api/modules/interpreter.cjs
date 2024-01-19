@@ -21,11 +21,14 @@ let strict = '';
 
   
     try{
-
-      if(options?.async){
-      output = await eval(`${strict}${decodeURIComponent(code)}`);
+      if(options?.module){
+       output = await import(`data:text/javascript,${strict}${decodeURIComponent(code)}`);
       }else{
-        output = eval(`${strict}${decodeURIComponent(code)}`);
+        if(options?.async){
+        output = await eval(`${strict}${decodeURIComponent(code)}`);
+        }else{
+          output = eval(`${strict}${decodeURIComponent(code)}`);
+        }
       }
     }catch(e){
       if(!output){

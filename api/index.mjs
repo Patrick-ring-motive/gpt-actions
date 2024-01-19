@@ -73,7 +73,7 @@ async function onRequest(req, res) {
     if(params.has('async')&&(params.get('async')=='false')){
       options.async = false;
     }
-    if(params.has('module')&&(params.get('strict')=='true')){
+    if(params.has('module')&&(params.get('module')=='true')){
       options.module = true;
     }
 
