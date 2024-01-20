@@ -76,7 +76,7 @@ try{
 }
   output = `${output}`;
   if(log.trim().length==0){
-  return output;
+  return 'return: '+output+'\nlog: '+log;
   }
   if((output.trim().length==0)||(output.includes('value: undefined'))||(`${output}`=='undefined')){
 
