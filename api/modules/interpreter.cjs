@@ -1,22 +1,5 @@
 const util = require('node:util'); 
 
-const fs = require('fs');
-
-async function writeCodeAsync(code) {
-  let id = new Date().getTime();
-  globalThis[`console${id}`]={};
-  globalThis[`log${id}`] ='';
-  globalThis[`console${id}`].log=function(){for(let i=0;i<arguments.length;i++){globalThis[`log${id}`]+=util.inspect(arguments[i]);}}
-  try {
-    fs.writeFileSync(`module${id}.mjs`, code.replaceAll('console.log',`globalThis.console${id}.log`));
-    console.log('File written successfully');
-  } catch (e) {
-    console.log('Error writing file:', error);
-  }
-
-  return id;
-}
-
 
 
 
@@ -70,13 +53,12 @@ try{
     }
   }
 }catch(e){
-  log += e.message;
-  try{output = util.inspect(output);}catch(e){log += e.message;}
+  try{output = util.inspect(output);}catch(e){}
     console.log(e.message);
 }
   output = `${output}`;
   if(log.trim().length==0){
-  return 'return: '+output+'\nlog: '+log;
+  return output;
   }
   if((output.trim().length==0)||(output.includes('value: undefined'))){
 
