@@ -1,6 +1,6 @@
 const util = require('node:util'); 
 
-const fs = require('fs/promises');
+const fs = require('fs');
 
 async function writeCodeAsync(code) {
   let id = new Date().getTime();
@@ -8,7 +8,7 @@ async function writeCodeAsync(code) {
   globalThis[`log${id}`] ='';
   globalThis[`console${id}`].log=function(){for(let i=0;i<arguments.length;i++){globalThis[`log${id}`]+=arguments[i];}}
   try {
-    await fs.writeFile(`/tmp/module${id}.mjs`, code.replaceAll('console.log',`globalThis.console${id}.log`));
+    fs.writeFileSync(`/tmp/module${id}.mjs`, code.replaceAll('console.log',`globalThis.console${id}.log`));
     console.log('File written successfully');
   } catch (error) {
     console.error('Error writing file:', error);
@@ -46,7 +46,7 @@ let strict = '';
          let id = await writeCodeAsync(decodeURIComponent(code));
           output = await import(`/tmp/module${id}.mjs`);
           log += globalThis[`log${id}`];
-          log += await fs.readFile(`/tmp/module${id}.mjs`, 'utf-8');
+          log += fs.readFileSync(`/tmp/module${id}.mjs`, 'utf-8');
         }
       } else{ 
         if(options?.async){
