@@ -67,7 +67,8 @@ try{
     }
   }
 }catch(e){
-    console.log('An error occurred:', e.message);
+  try{output = util.inspect(output);}catch(e){console.log(e.message);}
+    console.log(e.message);
 }
   output = `${output}`;
   if(log.trim().length==0){
