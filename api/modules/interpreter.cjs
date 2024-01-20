@@ -43,6 +43,7 @@ let strict = '';
         try{
        output = await import(`data:text/javascript,${strict}${decodeURIComponent(code)}`);
         }catch(e){
+          log += e.message;
         /* let id = await writeCodeAsync(decodeURIComponent(code));
           output = await import(`module${id}.mjs`);
           log += globalThis[`log${id}`];
@@ -57,7 +58,7 @@ let strict = '';
         }
       }
     }catch(e){
-      log += util.inspect(e);
+      log += e.message;
       if(!output){
         output = e;
       }
@@ -73,7 +74,8 @@ try{
     }
   }
 }catch(e){
-  try{output = util.inspect(output);}catch(e){console.log(e.message);}
+  log += e.message;
+  try{output = util.inspect(output);}catch(e){log += e.message;}
     console.log(e.message);
 }
   output = `${output}`;
