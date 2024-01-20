@@ -1,4 +1,5 @@
 const util = require('node:util'); 
+
 const fs = require('fs/promises');
 
 async function writeCodeAsync(code) {
@@ -12,16 +13,19 @@ async function writeCodeAsync(code) {
   } catch (error) {
     console.error('Error writing file:', error);
   }
-  
+
   return id;
 }
 
 
 
+
+globalThis.interpretCode = async function(code,options) {
+
   let output ='';
   let log = '';
- 
-  
+
+
     if(!(console.backuplog))
     {console.backuplog=console.log;}
     console.log = function(){for(let i=0;i<arguments.length;i++){log+=arguments[i];}}
@@ -31,9 +35,9 @@ let strict = '';
   if(options?.strict){
     strict = '"use ' + 'strict";';
   }
-  
 
-  
+
+
     try{
       if(options?.module){
         try{
@@ -56,7 +60,7 @@ let strict = '';
         output = e;
       }
     }
- 
+
   console.log = console.backuplog;
 try{
   if(`${output}`=='[object Object]'){
