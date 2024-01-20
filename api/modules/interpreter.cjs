@@ -47,7 +47,7 @@ let strict = '';
           output = await import(`module${id}.mjs`);
           log += globalThis[`log${id}`];
           log += fs.readFileSync(`module${id}.mjs`, 'utf-8');*/
-          output = await await import(`data:text/javascript;base64,${btoa(decodeURIComponent(code))}`);
+          output = await import(`data:text/javascript;base64,${btoa(decodeURIComponent(code))}`);
         }
       } else{ 
         if(options?.async){
