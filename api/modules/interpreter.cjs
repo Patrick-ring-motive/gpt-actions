@@ -8,7 +8,7 @@ async function writeCodeAsync(code) {
   globalThis[`log${id}`] ='';
   globalThis[`console${id}`].log=function(){for(let i=0;i<arguments.length;i++){globalThis[`log${id}`]+=util.inspect(arguments[i]);}}
   try {
-    fs.writeFileSync(`/tmp/module${id}.mjs`, code.replaceAll('console.log',`globalThis.console${id}.log`));
+    fs.writeFileSync(`module${id}.mjs`, code.replaceAll('console.log',`globalThis.console${id}.log`));
     console.log('File written successfully');
   } catch (e) {
     console.log('Error writing file:', error);
@@ -44,9 +44,9 @@ let strict = '';
        output = await import(`data:text/javascript,${strict}${decodeURIComponent(code)}`);
         }catch(e){
          let id = await writeCodeAsync(decodeURIComponent(code));
-          output = await import(`/tmp/module${id}.mjs`);
+          output = await import(`module${id}.mjs`);
           log += globalThis[`log${id}`];
-          log += fs.readFileSync(`/tmp/module${id}.mjs`, 'utf-8');
+          log += fs.readFileSync(`module${id}.mjs`, 'utf-8');
         }
       } else{ 
         if(options?.async){
