@@ -24,10 +24,10 @@ let strict = '';
     try{
       if(options?.module){
         try{
-       output = await import(`data:text/javascript,${strict}${decodeURIComponent(code)}`);
+       output = await import(`data:text/javascript,${strict}${new Date().getTime()};${decodeURIComponent(code)}`);
         }catch(e){
           log += e.message;
-          output = await import(`data:text/javascript;base64,${btoa(decodeURIComponent(code))}`);
+          output = await import(`data:text/javascript;base64,${btoa(`${strict}${new Date().getTime()};${decodeURIComponent(code)}`)}`);
         }
       } else{ 
         if(options?.async){
