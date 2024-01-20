@@ -6,12 +6,12 @@ async function writeCodeAsync(code) {
   let id = new Date().getTime();
   globalThis[`console${id}`]={};
   globalThis[`log${id}`] ='';
-  globalThis[`console${id}`].log=function(){for(let i=0;i<arguments.length;i++){globalThis[`log${id}`]+=arguments[i];}}
+  globalThis[`console${id}`].log=function(){for(let i=0;i<arguments.length;i++){globalThis[`log${id}`]+=util.inspect(arguments[i]);}}
   try {
     fs.writeFileSync(`/tmp/module${id}.mjs`, code.replaceAll('console.log',`globalThis.console${id}.log`));
     console.log('File written successfully');
-  } catch (error) {
-    console.error('Error writing file:', error);
+  } catch (e) {
+    console.log('Error writing file:', error);
   }
 
   return id;
@@ -28,7 +28,7 @@ globalThis.interpretCode = async function(code,options) {
 
     if(!(console.backuplog))
     {console.backuplog=console.log;}
-    console.log = function(){for(let i=0;i<arguments.length;i++){log+=arguments[i];}}
+    console.log = function(){for(let i=0;i<arguments.length;i++){log+=util.inspect(arguments[i]);}}
 
 let strict = '';
 
