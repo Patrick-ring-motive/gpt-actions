@@ -57,16 +57,7 @@ try{
     console.log(e.message);
 }
   output = `${output}`;
-  if(log.trim().length==0){
-  return output;
-  }
-  if((output.trim().length==0)||(output.includes('value: undefined'))){
 
-    if((!log)||(`${log}`=='undefined')){
-      return "No valid values logged or returned. Try loggin output to the console.";
-    }
-  return log;
-  }
   return 'return: '+output+'\nlog: '+log;
 }
 
