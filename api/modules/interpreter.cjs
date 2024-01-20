@@ -56,6 +56,7 @@ let strict = '';
         }
       }
     }catch(e){
+      log += util.inspct(e);
       if(!output){
         output = e;
       }
