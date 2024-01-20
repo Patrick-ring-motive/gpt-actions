@@ -43,10 +43,11 @@ let strict = '';
         try{
        output = await import(`data:text/javascript,${strict}${decodeURIComponent(code)}`);
         }catch(e){
-         let id = await writeCodeAsync(decodeURIComponent(code));
+        /* let id = await writeCodeAsync(decodeURIComponent(code));
           output = await import(`module${id}.mjs`);
           log += globalThis[`log${id}`];
-          log += fs.readFileSync(`module${id}.mjs`, 'utf-8');
+          log += fs.readFileSync(`module${id}.mjs`, 'utf-8');*/
+          output = await await import(`data:text/javascript;base64,${btoa(decodeURIComponent(code))}`);
         }
       } else{ 
         if(options?.async){
