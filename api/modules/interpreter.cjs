@@ -38,10 +38,13 @@ let strict = '';
   
     try{
       if(options?.module){
-       //output = await import(`data:text/javascript,${strict}${decodeURIComponent(code)}`);
-        let id = await writeCodeAsync(decodeURIComponent(code));
-        output = await import(`/tmp/module${id}.mjs`);
-      }else{
+        try{
+       output = await import(`data:text/javascript,${strict}${decodeURIComponent(code)}`);
+        }catch(e){
+         let id = await writeCodeAsync(decodeURIComponent(code));
+          output = await import(`/tmp/module${id}.mjs`);
+        }
+      }else{ 
         if(options?.async){
         output = await eval(`${strict}${decodeURIComponent(code)}`);
         }else{
