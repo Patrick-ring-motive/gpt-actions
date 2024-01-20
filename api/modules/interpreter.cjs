@@ -44,7 +44,7 @@ let strict = '';
          let id = await writeCodeAsync(decodeURIComponent(code));
           output = await import(`/tmp/module${id}.mjs`);
         }
-      }else{ 
+      } else{ 
         if(options?.async){
         output = await eval(`${strict}${decodeURIComponent(code)}`);
         }else{
@@ -58,6 +58,7 @@ let strict = '';
     }
  
   console.log = console.backuplog;
+try{
   if(`${output}`=='[object Object]'){
     if((output.value)&&(!(`${output.value}`.startsWith('code=')))){
       output=output.value;
@@ -65,6 +66,9 @@ let strict = '';
       output = util.inspect(output);
     }
   }
+}catch(e){
+    console.log('An error occurred:', error.message);
+}
   output = `${output}`;
   if(log.trim().length==0){
   return output;
