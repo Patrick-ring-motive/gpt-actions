@@ -1,5 +1,5 @@
 const util = require('node:util'); 
-require('core-js')
+require('core-js');
 
 
 
