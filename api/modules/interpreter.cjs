@@ -21,7 +21,7 @@ async function writeCodeAsync(code) {
 
 
 globalThis.interpretCode = async function(code,options) {
-
+  code = code.replace(/%2F%2F%.*%0A/g,'');
   let output ='';
   let log = '';
 
@@ -44,10 +44,6 @@ let strict = '';
        output = await import(`data:text/javascript,${strict}${decodeURIComponent(code)}`);
         }catch(e){
           log += e.message;
-        /* let id = await writeCodeAsync(decodeURIComponent(code));
-          output = await import(`module${id}.mjs`);
-          log += globalThis[`log${id}`];
-          log += fs.readFileSync(`module${id}.mjs`, 'utf-8');*/
           output = await import(`data:text/javascript;base64,${btoa(decodeURIComponent(code))}`);
         }
       } else{ 
@@ -82,7 +78,7 @@ try{
   if(log.trim().length==0){
   return 'return: '+output+'\nlog: '+log;
   }
-  if((output.trim().length==0)||(output.includes('value: undefined'))||(`${output}`=='undefined')){
+  if((output.trim().length==0)||(output.includes('value: undefined'))){
 
     if((!log)||(`${log}`=='undefined')){
       return "No valid values logged or returned. Try loggin output to the console.";
