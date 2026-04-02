@@ -1,21 +1,28 @@
-const util = require('node:util'); 
+const util = require('node:util');
 let ifTryPromise = import('./iftry.mjs');
 globalThis.interpretCode = async function(code) {
-  if(!globalThis.ifTry){
+  if (!globalThis.ifTry) {
     await ifTryPromise;
   }
-  let output ='';
+  let output = '';
   let log = '';
-  try{
-    if(!(console.backuplog))
-    {console.backuplog=console.log;}
-    console.log = function(){for(let i=0;i<arguments.length;i++){log+=arguments[i];}}
-    try{output = await eval(`${decodeURIComponent(code)}`);}catch(e){
-    if(code.includes('return')){
-    output = eval(`${decodeURIComponent(code)}`);
-    }else{
-      try{
-      output = await eval(`
+  try {
+    if (!(console.backuplog)) {
+      console.backuplog = console.log;
+    }
+    console.log = function() {
+      for (let i = 0; i < arguments.length; i++) {
+        log += arguments[i];
+      }
+    }
+    try {
+      output = await eval(`${decodeURIComponent(code)}`);
+    } catch (e) {
+      if (code.includes('return')) {
+        output = eval(`${decodeURIComponent(code)}`);
+      } else {
+        try {
+          output = await eval(`
       (async function*(){
         try{
           do{
@@ -32,8 +39,8 @@ globalThis.interpretCode = async function(code) {
         }
       })().next();
       `);
-      }catch(e){
-        output = await eval(`
+        } catch (e) {
+          output = await eval(`
         (async function*(){
           try{
             do{
@@ -44,11 +51,11 @@ globalThis.interpretCode = async function(code) {
           }
         })().next();
         `);
+        }
       }
     }
-    }
-  }catch(e){
-    try{
+  } catch (e) {
+    try {
       output = await eval(`
         (async function*(){
           try{
@@ -60,33 +67,33 @@ globalThis.interpretCode = async function(code) {
           }
         })().next();
       `);
-    }catch(e){
-      try{
+    } catch (e) {
+      try {
         output = await eval(`${decodeURIComponent(code).replaceAll('const ',' ').replaceAll('let ',' ').replace('var ',' ').replace('return ',' ')};`);
-      }catch(e){
-      output = `code=${decodeURIComponent(code)}\n`+util.inspect(e);
+      } catch (e) {
+        output = `code=${decodeURIComponent(code)}\n` + util.inspect(e);
       }
     }
   }
 
   console.log = console.backuplog;
-  if(`${output}`=='[object Object]'){
-    if((output.value)&&(!(`${output.value}`.startsWith('code=')))){
-      output=output.value;
-    }else{
+  if (`${output}` == '[object Object]') {
+    if ((output.value) && (!(`${output.value}`.startsWith('code=')))) {
+      output = output.value;
+    } else {
       output = util.inspect(output);
     }
   }
   output = `${output}`;
-  if(log.trim().length==0){
-  return output;
+  if (log.trim().length == 0) {
+    return output;
   }
-  if((output.trim().length==0)||(output.includes('value: undefined'))||(`${output}`=='undefined')){
+  if ((output.trim().length == 0) || (output.includes('value: undefined')) || (`${output}` == 'undefined')) {
 
-    if((!log)||(`${log}`=='undefined')){
+    if ((!log) || (`${log}` == 'undefined')) {
       return "No valid values logged or returned. Try loggin output to the console.";
     }
-  return log;
+    return log;
   }
-  return 'return: '+output+'\nlog: '+log;
+  return 'return: ' + output + '\nlog: ' + log;
 }
