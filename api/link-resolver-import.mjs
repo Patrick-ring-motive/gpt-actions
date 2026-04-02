@@ -1,5 +1,4 @@
-
-globalThis['link-resolver-import']=`<script>
+globalThis['link-resolver-import'] = `<script>
 
 
 
@@ -222,4 +221,3 @@ continue;
       }
 
 </script>`;
-
